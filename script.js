@@ -1,11 +1,10 @@
-// Bank Data hanya digunakan untuk animasi acak cepat di layar proyektor
+// Digunakan hanya sebagai pemanis variasi saat layar proyektor mengacak visual secara cepat
 const bankBenderaAnimasi = [
     "https://flagcdn.com/id.svg", "https://flagcdn.com/ar.svg", "https://flagcdn.com/fr.svg", "https://flagcdn.com/br.svg",
-    "https://flagcdn.com/jp.svg", "https://flagcdn.com/de.svg", "https://flagcdn.com/gb-eng.svg", "https://flagcdn.com/nl.svg",
-    "https://flagcdn.com/ma.svg", "https://flagcdn.com/pt.svg", "https://flagcdn.com/es.svg", "https://flagcdn.com/sa.svg"
+    "https://flagcdn.com/jp.svg", "https://flagcdn.com/de.svg", "https://flagcdn.com/gb-eng.svg", "https://flagcdn.com/nl.svg"
 ];
 
-let potPeserta = []; // Berisi kumpulan objek { nama: "X", flag: "URL" } yang diinput user
+let potPeserta = []; 
 let hasilKocokan = [];
 let isDrawing = false;
 
@@ -32,12 +31,11 @@ function toggleMusik() {
     }
 }
 
-// Menampilkan list apa saja yang sudah didaftarkan ke dalam POT
 function renderPot() {
     const potContainer = document.getElementById("pot-teams");
     potContainer.innerHTML = "";
     if (potPeserta.length === 0) {
-        potContainer.innerHTML = "<span style='color: #64748b; font-style: italic;'>Pot kosong. Daftarkan nama & bendera di atas!</span>";
+        potContainer.innerHTML = "<span style='color: #64748b; font-style: italic;'>Pot kosong. Daftarkan bendera & nama manual di atas!</span>";
         return;
     }
     potPeserta.forEach(p => {
@@ -48,41 +46,41 @@ function renderPot() {
     });
 }
 
-// Fungsi memasukkan Pasangan Nama + Bendera Pilihan Sendiri
+// Fungsi Menambahkan Pasangan secara Manual Total
 function tambahPeserta() {
     putarMusik();
-    const selectBendera = document.getElementById("select-bendera");
+    const inputBendera = document.getElementById("input-bendera");
     const inputPeserta = document.getElementById("input-peserta");
     
+    const kodeNegara = inputBendera.value.trim().toLowerCase();
     const nama = inputPeserta.value.trim();
-    if (nama === "") return alert("Ketik namanya dulu bos!");
 
-    // Ambil data bendera dari value dropdown (Format: "kode|NamaNegara")
-    const dataBendera = selectBendera.value.split("|");
-    const kodeNegara = dataBendera[0];
+    if (kodeNegara === "") return alert("Ketik kode benderanya dulu bos (misal: id / br / ar)!");
+    if (nama === "") return alert("Ketik nama pemainnya dulu bos!");
+
+    // Konversi input teks kode negara langsung ke endpoint gambar CDN
     const urlFlag = `https://flagcdn.com/${kodeNegara}.svg`;
 
-    // Simpan ke array Pot
+    // Daftarkan ke paket pot
     potPeserta.push({
         nama: nama,
         flag: urlFlag
     });
 
-    // Reset kolom input nama agar siap ngetik nama selanjutnya
+    // Bersihkan semua kolom input setelah berhasil menambah
+    inputBendera.value = "";
     inputPeserta.value = "";
     renderPot();
 }
 
-// Mengocok urutan siapa yang keluar duluan ke tabel nomor urut
 function kocokSatuPeserta() {
     putarMusik();
     if (isDrawing) return;
-    if (potPeserta.length === 0) return alert("Daftarkan pasangan nama & bendera dulu di pot!");
+    if (potPeserta.length === 0) return alert("Pot kosong! Isi negara & nama manual dulu di atas.");
 
     isDrawing = true;
     const screen = document.getElementById("draw-screen");
 
-    // Efek Acak Kilat di Layar Proyektor
     let counter = 0;
     const intervalAcak = setInterval(() => {
         const flagAcak = bankBenderaAnimasi[Math.floor(Math.random() * bankBenderaAnimasi.length)];
@@ -96,12 +94,11 @@ function kocokSatuPeserta() {
         if (counter > 10) clearInterval(intervalAcak);
     }, 80);
 
-    // Hasil Final (Mengambil acak 1 pasang dari paket yang sudah kamu buat)
     setTimeout(() => {
         clearInterval(intervalAcak);
 
         const indexTerpilih = Math.floor(Math.random() * potPeserta.length);
-        const dataTerpilih = potPeserta.splice(indexTerpilled, 1)[0]; // Mengambil objek {nama, flag}
+        const dataTerpilih = potPeserta.splice(indexTerpilih, 1)[0];
 
         screen.innerHTML = `
             <div class="animated-result">
@@ -109,7 +106,6 @@ function kocokSatuPeserta() {
                 <span style="color: var(--accent-color); text-transform: uppercase;">⚡ ${dataTerpilih.nama} ⚡</span>
             </div>`;
 
-        // Kirim ke baris tabel klasemen bawah
         setTimeout(() => {
             hasilKocokan.push(dataTerpilih);
             const nomorUrut = hasilKocokan.length;
@@ -141,5 +137,4 @@ function resetDraw() {
     renderPot();
 }
 
-// Jalankan inisialisasi pot kosong di awal
 renderPot();

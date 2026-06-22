@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overall Tournament Draw Simulator</title>
+    <title>Tournament Draw Simulator</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Tombol kontrol musik minimalis di pojok kanan atas */
         .music-control {
             position: fixed;
             top: 20px;
@@ -30,23 +29,17 @@
             background: var(--accent-color);
             color: #000;
         }
-        /* Menyembunyikan pemutar video YouTube agar hanya audionya yang terdengar */
-        #youtube-player {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
 
     <button class="music-control" id="btn-musik" onclick="toggleMusik()">
-        🔊 Musik: On
+        🎵 Musik: Off
     </button>
 
-    <div id="https://youtu.be/pRpeEdMmmQ0?si=4QLYwxASdQp9x4xy"></div>
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="container">
         <h1>🏆 TOURNAMENT DRAW SIMULATOR 🏆</h1>
@@ -54,7 +47,7 @@
         <div class="pot-container">
             <h3>Input Nama Peserta/Pemain:</h3>
             <div class="input-row">
-                <input type="text" id="input-peserta" placeholder="Ketik nama peserta... (Contoh: Andi)">
+                <input type="text" id="input-peserta" placeholder="Ketik nama lalu klik Tambah...">
                 <button onclick="tambahPeserta()" class="btn-add">Tambah</button>
             </div>
             
@@ -65,7 +58,7 @@
         <div class="stage-container">
             <div class="screen-title">LIVE SELECTION</div>
             <div id="draw-screen" class="draw-screen">
-                <div class="placeholder-text">Klik tombol di bawah untuk mengocok...</div>
+                <div class="placeholder-text">Masukkan nama di atas terlebih dahulu, lalu klik tombol di bawah...</div>
             </div>
         </div>
 
@@ -88,7 +81,6 @@
         </div>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
 </body>
 </html>

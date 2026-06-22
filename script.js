@@ -9,77 +9,43 @@ const bankBendera = [
     { url: "https://flagcdn.com/uy.svg" }, { url: "https://flagcdn.com/sn.svg" }
 ];
 
-const daftarPesertaAwal = ["Fernandi", "Budi", "Siti", "Roni", "Agus", "Dewi", "Eko", "Putri", "Rian", "Maman", "Reza", "Dina"];
-
+// Kosongkan nama awal agar wajib mengisi nama kustom sendiri di web
 let benderas = [...bankBendera];
-let pesertas = [...daftarPesertaAwal];
+let pesertas = []; 
 let hasilKocokan = [];
 let isDrawing = false;
 
-// --- INTEGRASI YOUTUBE AUTO-PLAY ENGINE ---
-let player;
+const musik = document.getElementById("bg-music");
 const btnMusik = document.getElementById("btn-musik");
-let musicStarted = false;
 
-// Fungsi bawaan YouTube API untuk menyiapkan video
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-player', {
-        videoId: 'pRpeEdMmmQ0', // ID Video Waka Waka Shakira dari link kamu
-        playerVars: {
-            'autoplay': 0,
-            'controls': 0,
-            'loop': 1,
-            'playlist': 'pRpeEdMmmQ0' // Dibutuhkan agar fitur loop berfungsi
-        },
-        events: {
-            'onReady': onPlayerReady
-        }
-    });
-}
-
-function onPlayerReady(event) {
-    // Siapkan volume maksimal
-    player.setVolume(100);
-}
-
-function putarMusikOtomatis() {
-    if (musicStarted || !player || typeof player.playVideo !== 'function') return;
-    
-    player.playVideo();
-    musicStarted = true;
-    btnMusik.innerHTML = "⏸️ Musik: On";
-    btnMusik.style.background = "var(--accent-color)";
-    btnMusik.style.color = "#000";
-}
-
-// Memicu musik menyala otomatis saat user menyentuh/klik apa pun pertama kali di halaman web
-document.body.addEventListener("click", putarMusikOtomatis, { once: true });
-document.getElementById("input-peserta").addEventListener("focus", putarMusikOtomatis, { once: true });
-
-function toggleMusik() {
-    if (!player || typeof player.getPlayerState !== 'function') return;
-    
-    const state = player.getPlayerState();
-    if (state === YT.PlayerState.PLAYING) {
-        player.pauseVideo();
-        btnMusik.innerHTML = "🎵 Musik: Off";
-        btnMusik.style.background = "rgba(13, 28, 46, 0.8)";
-        btnMusik.style.color = "#fff";
-    } else {
-        player.playVideo();
-        musicStarted = true;
-        btnMusik.innerHTML = "⏸️ Musik: On";
-        btnMusik.style.background = "var(--accent-color)";
-        btnMusik.style.color = "#000";
+// Fungsi Pemutar Musik
+function putarMusik() {
+    if (musik.paused) {
+        musik.play().then(() => {
+            btnMusik.innerHTML = "⏸️ Musik: On";
+            btnMusik.style.background = "var(--accent-color)";
+            btnMusik.style.color = "#000";
+        }).catch(err => console.log("Menunggu tindakan klik user..."));
     }
 }
 
-// --- LOGIKA UNDIAN & TABEL ---
+function toggleMusik() {
+    if (musik.paused) {
+        putarMusik();
+    } else {
+        musik.pause();
+        btnMusik.innerHTML = "🎵 Musik: Off";
+        btnMusik.style.background = "rgba(13, 28, 46, 0.8)";
+        btnMusik.style.color = "#fff";
+    }
+}
+
+// Render daftar nama yang ada di dalam Pot
 function renderPot() {
     const potContainer = document.getElementById("pot-teams");
     potContainer.innerHTML = "";
     if (pesertas.length === 0) {
-        potContainer.innerHTML = "<span style='color: #64748b; font-style: italic;'>Semua peserta sudah masuk tabel!</span>";
+        potContainer.innerHTML = "<span style='color: #64748b; font-style: italic;'>Pot kosong. Silakan ketik nama kamu di atas!</span>";
         return;
     }
     pesertas.forEach(nama => {
@@ -90,25 +56,30 @@ function renderPot() {
     });
 }
 
+// Fungsi Menambahkan Nama Kustom Sendiri
 function tambahPeserta() {
-    putarMusikOtomatis();
+    putarMusik(); // Aktifkan musik saat interaksi pertama
     const input = document.getElementById("input-peserta");
     const nama = input.value.trim();
     if (nama === "") return alert("Ketik namanya dulu bos!");
+    
     pesertas.push(nama);
     input.value = "";
     renderPot();
 }
 
+// Fungsi Utama Mengocok Peserta Kustom ke Tabel
 function kocokSatuPeserta() {
-    putarMusikOtomatis();
+    putarMusik(); // Nyalakan musik otomatis saat tombol kocok ditekan
+    
     if (isDrawing) return;
-    if (pesertas.length === 0) return alert("Pot peserta kosong!");
+    if (pesertas.length === 0) return alert("Masukkan nama kustom dulu di atas sebelum mengocok!");
     if (benderas.length === 0) return alert("Persediaan bendera habis!");
 
     isDrawing = true;
     const screen = document.getElementById("draw-screen");
 
+    // Efek Acak Visual di Layar Utama (0.8 Detik)
     let counter = 0;
     const intervalAcak = setInterval(() => {
         const namaAcak = pesertas[Math.floor(Math.random() * pesertas.length)];
@@ -122,6 +93,7 @@ function kocokSatuPeserta() {
         if (counter > 10) clearInterval(intervalAcak);
     }, 80);
 
+    // Kunci Hasil Undian Sebenarnya
     setTimeout(() => {
         clearInterval(intervalAcak);
 
@@ -137,6 +109,7 @@ function kocokSatuPeserta() {
                 <span style="color: var(--accent-color); text-transform: uppercase;">⚡ ${namaTerpilih} ⚡</span>
             </div>`;
 
+        // Masukkan Baris Baru ke Dalam Tabel setelah Jeda Animasi 1.2 Detik
         setTimeout(() => {
             hasilKocokan.push({ nama: namaTerpilih, flag: benderaTerpilih.url });
             const nomorUrut = hasilKocokan.length;
@@ -163,11 +136,12 @@ function kocokSatuPeserta() {
 function resetDraw() {
     if (isDrawing) return;
     benderas = [...bankBendera];
-    pesertas = [...daftarPesertaAwal];
+    pesertas = [];
     hasilKocokan = [];
-    document.getElementById("draw-screen").innerHTML = `<div class="placeholder-text">Klik tombol di bawah untuk mengocok...</div>`;
+    document.getElementById("draw-screen").innerHTML = `<div class="placeholder-text">Masukkan nama di atas terlebih dahulu, lalu klik tombol di bawah...</div>`;
     document.getElementById("table-body").innerHTML = "";
     renderPot();
 }
 
+// Panggil Pot di Awal (Akan memunculkan teks kosong)
 renderPot();

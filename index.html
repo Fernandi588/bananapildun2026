@@ -3,13 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium World Cup Draw Simulator</title>
+    <title>Overall Tournament Draw Simulator</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(19, 28, 46, 0.8);
+            border: 2px solid var(--accent-color);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .music-control:hover {
+            transform: scale(1.05);
+            background: var(--accent-color);
+            color: #000;
+        }
+    </style>
 </head>
 <body>
 
+    <button class="music-control" id="btn-musik" onclick="toggleMusik()">
+        🎵 Play Waka Waka
+    </button>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+
     <div class="container">
-        <h1>🏆 WORLD CUP DRAW SIMULATOR 🏆</h1>
+        <h1>🏆 TOURNAMENT DRAW SIMULATOR 🏆</h1>
         
         <div class="pot-container">
             <h3>Input Nama Peserta/Pemain:</h3>
@@ -34,11 +67,17 @@
             <button id="reset-btn" onclick="resetDraw()" class="btn-reset">Reset</button>
         </div>
 
-        <div class="grid-groups">
-            <div class="group-card" id="group-A"><div class="group-header">GRUP A</div><ul class="team-list"></ul></div>
-            <div class="group-card" id="group-B"><div class="group-header">GRUP B</div><ul class="team-list"></ul></div>
-            <div class="group-card" id="group-C"><div class="group-header">GRUP C</div><ul class="team-list"></ul></div>
-            <div class="group-card" id="group-D"><div class="group-header">GRUP D</div><ul class="team-list"></ul></div>
+        <div class="table-container">
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th width="15%">No Urut</th>
+                        <th width="25%">Bendera</th>
+                        <th width="60%">Nama Peserta</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
         </div>
     </div>
 

@@ -37,37 +37,19 @@ h1 {
 .music-control:hover { background: var(--accent-color); color: #000; }
 
 .input-row { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
-
-/* Gaya Dropdown Bendera */
-select {
-    padding: 12px 20px; border-radius: 25px; border: 2px solid #1e293b;
-    background: #0f172a; color: #fff; outline: none; font-weight: 600;
-    cursor: pointer;
-}
-select:focus { border-color: var(--accent-glow); }
-
 input[type="text"] {
     padding: 12px 20px; border-radius: 25px; border: 2px solid #1e293b;
-    background: #0f172a; color: #fff; width: 220px; outline: none;
+    background: #0f172a; color: #fff; width: 260px; outline: none;
 }
-input[type="text"]:focus { border-color: var(--accent-glow); }
 
 button { border: none; font-weight: bold; border-radius: 25px; cursor: pointer; transition: all 0.3s; }
 .btn-add { background: #3b82f6; color: white; padding: 0 25px; }
-.btn-add:hover { background: #2563eb; }
 .btn-main { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; padding: 15px 40px; font-size: 18px; }
-.btn-main:hover { transform: scale(1.05); }
 .btn-reset { background: #334155; color: #cbd5e1; padding: 15px 30px; margin-left: 10px; }
 
 .pot-container { background-color: var(--card-bg); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid #1e293b; }
 .pot-teams { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; min-height: 40px; }
-
-/* Badge Peserta di Pot dengan benderanya */
-.team-badge { 
-    background: #1e293b; padding: 8px 16px; border-radius: 20px; font-size: 14px; 
-    border: 1px solid #334155; display: flex; align-items: center; gap: 8px; 
-}
-.pot-flag { width: 18px; height: 12px; object-fit: cover; border-radius: 1px; }
+.team-badge { background: #1e293b; padding: 8px 16px; border-radius: 20px; font-size: 14px; border: 1px solid #334155; }
 
 .stage-container {
     background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
@@ -81,12 +63,25 @@ button { border: none; font-weight: bold; border-radius: 25px; cursor: pointer; 
 .animated-result { display: flex; align-items: center; gap: 20px; font-size: 28px; font-weight: 800; }
 .animated-result img { width: 60px; height: 42px; border-radius: 6px; object-fit: cover; }
 
-.table-container { background-color: var(--card-bg); border-radius: 14px; border: 1px solid #1e293b; overflow: hidden; margin-top: 25px; }
+/* --- PERBAIKAN GAYA TABEL --- */
+.table-container {
+    background-color: var(--card-bg); border-radius: 14px; border: 1px solid #1e293b;
+    overflow: hidden; margin-top: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
 .result-table { width: 100%; border-collapse: collapse; color: #cbd5e1; }
-.result-table th { background-color: #0f172a; color: var(--accent-color); padding: 15px; border-bottom: 2px solid #1e293b; }
+.result-table th { background-color: #0f172a; color: var(--accent-color); padding: 15px; font-weight: bold; border-bottom: 2px solid #1e293b; }
 .result-table td { padding: 15px; border-bottom: 1px solid #1e293b; text-align: center; font-size: 16px; font-weight: 600; vertical-align: middle; }
 .result-table tbody tr:nth-child(even) { background-color: #172237; }
 
-.table-flag { width: 50px !important; height: 33px !important; object-fit: cover; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); display: inline-block; }
+/* MENGUNCI UKURAN BENDERA DI TABEL (ANTI RAKSASA) */
+.table-flag { 
+    width: 50px !important; 
+    height: 33px !important; 
+    object-fit: cover; 
+    border-radius: 4px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5); 
+    display: inline-block;
+}
+
 .row-animation { animation: slideInRow 0.5s ease forwards; }
 @keyframes slideInRow { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }

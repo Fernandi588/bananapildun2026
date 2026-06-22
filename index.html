@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium World Cup Draw Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>🏆 WORLD CUP DRAW SIMULATOR 🏆</h1>
+        
+        <div class="pot-container">
+            <h3>Input Nama Peserta/Pemain:</h3>
+            <div class="input-row">
+                <input type="text" id="input-peserta" placeholder="Ketik nama peserta... (Contoh: Andi)">
+                <button onclick="tambahPeserta()" class="btn-add">Tambah</button>
+            </div>
+            
+            <h3>Daftar Peserta di Dalam Pot:</h3>
+            <div id="pot-teams" class="pot-teams"></div>
+        </div>
+
+        <div class="stage-container">
+            <div class="screen-title">LIVE SELECTION</div>
+            <div id="draw-screen" class="draw-screen">
+                <div class="placeholder-text">Klik tombol di bawah untuk mengocok...</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <button id="draw-btn" onclick="kocokSatuPeserta()" class="btn-main">🔮 KAMPANYE UNDIAN 🔮</button>
+            <button id="reset-btn" onclick="resetDraw()" class="btn-reset">Reset</button>
+        </div>
+
+        <div class="grid-groups">
+            <div class="group-card" id="group-A"><div class="group-header">GRUP A</div><ul class="team-list"></ul></div>
+            <div class="group-card" id="group-B"><div class="group-header">GRUP B</div><ul class="team-list"></ul></div>
+            <div class="group-card" id="group-C"><div class="group-header">GRUP C</div><ul class="team-list"></ul></div>
+            <div class="group-card" id="group-D"><div class="group-header">GRUP D</div><ul class="team-list"></ul></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

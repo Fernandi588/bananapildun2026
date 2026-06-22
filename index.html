@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tournament Draw Simulator - Manual Team Input</title>
+    <title>Tournament Draw Simulator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,40 +12,28 @@
         🎵 Musik: Off
     </button>
 
-    <!-- Free website background music player from www.soundimage.eu START //-->
-<script id="player_type" language="javascript" type="text/javascript"> 
-var player_id=8; 
-var soundimage_player_start = 1; 
-document.write('<div id="soundimage_holder'+player_id+'" align="center">');
-document.write('<div id="soundimage_player_main'+player_id+'"></div>'); 
-document.write('<a id="soundimage_player_links'+player_id+'" href="http://www.soundimage.eu/" target="_blank" title="Royalty Free Music">Royalty Free Music</a>');
-</script> 
-<script id="player_script" src="http://www.soundimage.pl/freemusic/soundimage_player_en2.js" language="javascript" type="text/javascript"></script> 
-</div>
-<!-- Free website background music player from www.soundimage.eu END //-->
-    
+    <audio id="bg-music" loop>
+        <source src="https://audio.com/genesis-1826308589352570/audio/shakira-waka-waka-time-for-africa" type="audio/mpeg">
+    </audio>
+
     <div class="container">
         <h1>🏆 TOURNAMENT DRAW SIMULATOR 🏆</h1>
         
         <div class="pot-container">
-            <h3>Input Manual Negara & Pemain yang Lolos:</h3>
+            <h3>Input Nama Peserta/Pemain:</h3>
             <div class="input-row">
-                <input type="text" id="input-bendera" placeholder="Kode Bendera (id, br, ar, fr, dll)..." style="width: 180px; text-transform: lowercase;">
-                <input type="text" id="input-peserta" placeholder="Nama pemain/peserta...">
-                <button onclick="tambahPeserta()" class="btn-add">Tambah ke Pot</button>
-            </div>
-            <div style="font-size: 11px; color: #64748b; margin-top: -5px; margin-bottom: 15px;">
-                💡 *Tips kode bendera: <b>id</b> (Indonesia), <b>br</b> (Brasil), <b>ar</b> (Argentina), <b>fr</b> (Prancis), <b>jp</b> (Jepang), <b>de</b> (Jerman), <b>gb-eng</b> (Inggris), <b>my</b> (Malaysia).
+                <input type="text" id="input-peserta" placeholder="Ketik nama lalu klik Tambah...">
+                <button onclick="tambahPeserta()" class="btn-add">Tambah</button>
             </div>
             
-            <h3>Daftar Peserta Siap Diundi (Ada di Dalam Pot):</h3>
+            <h3>Daftar Peserta di Dalam Pot:</h3>
             <div id="pot-teams" class="pot-teams"></div>
         </div>
 
         <div class="stage-container">
             <div class="screen-title">LIVE SELECTION</div>
             <div id="draw-screen" class="draw-screen">
-                <div class="placeholder-text">Masukkan pasangan negara & nama di atas, lalu klik tombol di bawah...</div>
+                <div class="placeholder-text">Masukkan nama di atas terlebih dahulu, lalu klik tombol di bawah...</div>
             </div>
         </div>
 
@@ -63,7 +51,8 @@ document.write('<a id="soundimage_player_links'+player_id+'" href="http://www.so
                         <th style="width: 50%;">Nama Peserta</th>
                     </tr>
                 </thead>
-                <tbody id="table-body"></tbody>
+                <tbody id="table-body">
+                    </tbody>
             </table>
         </div>
     </div>

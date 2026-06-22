@@ -16,35 +16,61 @@ let pesertas = [...daftarPesertaAwal];
 let hasilKocokan = [];
 let isDrawing = false;
 
-// --- LOGIKA OTOMATIS PUTAR MUSIK (ANTI BLOCK BROWSER) ---
-const musik = document.getElementById("bg-music");
+// --- INTEGRASI YOUTUBE AUTO-PLAY ENGINE ---
+let player;
 const btnMusik = document.getElementById("btn-musik");
+let musicStarted = false;
 
-function putarMusikOtomatis() {
-    if (musik.paused) {
-        musik.play().then(() => {
-            btnMusik.innerHTML = "⏸️ Musik: On";
-            btnMusik.style.background = "var(--accent-color)";
-            btnMusik.style.color = "#000";
-        }).catch(err => console.log("Menunggu interaksi user..."));
-    }
+// Fungsi bawaan YouTube API untuk menyiapkan video
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-player', {
+        videoId: 'pRpeEdMmmQ0', // ID Video Waka Waka Shakira dari link kamu
+        playerVars: {
+            'autoplay': 0,
+            'controls': 0,
+            'loop': 1,
+            'playlist': 'pRpeEdMmmQ0' // Dibutuhkan agar fitur loop berfungsi
+        },
+        events: {
+            'onReady': onPlayerReady
+        }
+    });
 }
 
-// Memicu musik otomatis menyala saat user klik bagian mana saja di halaman web
+function onPlayerReady(event) {
+    // Siapkan volume maksimal
+    player.setVolume(100);
+}
+
+function putarMusikOtomatis() {
+    if (musicStarted || !player || typeof player.playVideo !== 'function') return;
+    
+    player.playVideo();
+    musicStarted = true;
+    btnMusik.innerHTML = "⏸️ Musik: On";
+    btnMusik.style.background = "var(--accent-color)";
+    btnMusik.style.color = "#000";
+}
+
+// Memicu musik menyala otomatis saat user menyentuh/klik apa pun pertama kali di halaman web
 document.body.addEventListener("click", putarMusikOtomatis, { once: true });
 document.getElementById("input-peserta").addEventListener("focus", putarMusikOtomatis, { once: true });
 
 function toggleMusik() {
-    if (musik.paused) {
-        musik.play();
-        btnMusik.innerHTML = "⏸️ Musik: On";
-        btnMusik.style.background = "var(--accent-color)";
-        btnMusik.style.color = "#000";
-    } else {
-        musik.pause();
+    if (!player || typeof player.getPlayerState !== 'function') return;
+    
+    const state = player.getPlayerState();
+    if (state === YT.PlayerState.PLAYING) {
+        player.pauseVideo();
         btnMusik.innerHTML = "🎵 Musik: Off";
         btnMusik.style.background = "rgba(13, 28, 46, 0.8)";
         btnMusik.style.color = "#fff";
+    } else {
+        player.playVideo();
+        musicStarted = true;
+        btnMusik.innerHTML = "⏸️ Musik: On";
+        btnMusik.style.background = "var(--accent-color)";
+        btnMusik.style.color = "#000";
     }
 }
 

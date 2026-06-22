@@ -30,6 +30,14 @@
             background: var(--accent-color);
             color: #000;
         }
+        /* Menyembunyikan pemutar video YouTube agar hanya audionya yang terdengar */
+        #youtube-player {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -38,9 +46,7 @@
         🔊 Musik: On
     </button>
 
-    <audio id="bg-music" loop>
-        <source src="https://assets.mixkit.co/active_storage/sfx/123/123.wav" type="audio/wav"> 
-        </audio>
+    <div id="https://youtu.be/pRpeEdMmmQ0?si=4QLYwxASdQp9x4xy"></div>
 
     <div class="container">
         <h1>🏆 TOURNAMENT DRAW SIMULATOR 🏆</h1>
@@ -82,6 +88,7 @@
         </div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
 </body>
 </html>

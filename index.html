@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tournament Draw Simulator - Custom Match</title>
+    <title>Tournament Draw Simulator - Manual Team Input</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -20,29 +20,14 @@
         <h1>🏆 TOURNAMENT DRAW SIMULATOR 🏆</h1>
         
         <div class="pot-container">
-            <h3>Pilih Bendera & Input Nama Pemain:</h3>
-            <div class="input-row" style="flex-wrap: wrap;">
-                <select id="select-bendera">
-                    <option value="id|Indonesia">🇮🇩 Indonesia</option>
-                    <option value="ar|Argentina">🇦🇷 Argentina</option>
-                    <option value="fr|Prancis">🇫🇷 Prancis</option>
-                    <option value="br|Brasil">🇧🇷 Brasil</option>
-                    <option value="jp|Jepang">🇯🇵 Jepang</option>
-                    <option value="de|Jerman">🇩🇪 Jerman</option>
-                    <option value="gb-eng|Inggris">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Inggris</option>
-                    <option value="nl|Belanda">🇳🇱 Belanda</option>
-                    <option value="ma|Maroko">🇲🇦 Maroko</option>
-                    <option value="pt|Portugal">🇵🇹 Portugal</option>
-                    <option value="es|Spanyol">🇪🇸 Spanyol</option>
-                    <option value="sa|Arab Saudi">🇸🇦 Arab Saudi</option>
-                    <option value="kr|Korea Selatan">🇰🇷 Korea Selatan</option>
-                    <option value="hr|Kroasia">🇭🇷 Kroasia</option>
-                    <option value="uy|Uruguay">🇺🇾 Uruguay</option>
-                    <option value="sn|Senegal">🇸🇳 Senegal</option>
-                </select>
-
-                <input type="text" id="input-peserta" placeholder="Ketik nama pemain...">
+            <h3>Input Manual Negara & Pemain yang Lolos:</h3>
+            <div class="input-row">
+                <input type="text" id="input-bendera" placeholder="Kode Bendera (id, br, ar, fr, dll)..." style="width: 180px; text-transform: lowercase;">
+                <input type="text" id="input-peserta" placeholder="Nama pemain/peserta...">
                 <button onclick="tambahPeserta()" class="btn-add">Tambah ke Pot</button>
+            </div>
+            <div style="font-size: 11px; color: #64748b; margin-top: -5px; margin-bottom: 15px;">
+                💡 *Tips kode bendera: <b>id</b> (Indonesia), <b>br</b> (Brasil), <b>ar</b> (Argentina), <b>fr</b> (Prancis), <b>jp</b> (Jepang), <b>de</b> (Jerman), <b>gb-eng</b> (Inggris), <b>my</b> (Malaysia).
             </div>
             
             <h3>Daftar Peserta Siap Diundi (Ada di Dalam Pot):</h3>
@@ -52,7 +37,7 @@
         <div class="stage-container">
             <div class="screen-title">LIVE SELECTION</div>
             <div id="draw-screen" class="draw-screen">
-                <div class="placeholder-text">Masukkan pasangan nama & bendera di atas, lalu klik tombol di bawah...</div>
+                <div class="placeholder-text">Masukkan pasangan negara & nama di atas, lalu klik tombol di bawah...</div>
             </div>
         </div>
 
